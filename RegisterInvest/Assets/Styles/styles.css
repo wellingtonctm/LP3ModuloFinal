@@ -1,0 +1,41 @@
+table td, table th {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+form {
+    margin: 0;
+}
+
+#error {
+    color: red;
+    border: 1px solid red;
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 0px 20px;
+}
+
+.hide5s {
+    animation: hideAnimation 0s ease-in 5s;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes hideAnimation {
+    to {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

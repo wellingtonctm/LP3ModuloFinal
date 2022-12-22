@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Usuários</title>
+    </head>
+
+    <style>
+        table td, table th {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        #error {
+            color: red;
+            border: 1px solid red;
+            border-radius: 10px;
+            background-color: rgba(255, 0, 0, 0.2);
+            padding: 0px 20px;
+        }
+
+        .hide5s {
+            animation: hideAnimation 0s ease-in 5s;
+            animation-fill-mode: forwards;
+        }
+          
+        @keyframes hideAnimation {
+            to {
+                visibility: hidden;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+
+    <body>
+        <div class="container">
+            <div style="margin-top: 20px;">
+                <form method="POST" action="/Usuarios/Criar">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="nome">Nome</label></td>
+                                <td><input id="nome" type="text" name="nome" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="email">E-mail</label></td>
+                                <td><input id="email" type="email" name="email" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="senha">Senha</label></td>
+                                <td><input id="senha" type="password" name="senha" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="display: flex; justify-content: center;">
+                                        <input type="submit" value="Cadastrar" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            {% if erro %}
+            <div id="error" class="hide5s" style="margin-top: 20px;">
+                <h4>Erro: {{ erro }} </h4>
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Usuario</th>
+                            <th>E-mais</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario.id }}</td>
+                            <td>{{ usuario.nome }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>
+                                <form method="POST" action="/Usuarios/Excluir">
+                                    <input name="id" type="hidden" value="{{ usuario.id }}" />
+                                    <input type="submit" value="Deletar" />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div
+    </body>
+</html>

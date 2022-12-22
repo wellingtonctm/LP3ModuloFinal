@@ -1,6 +1,4 @@
-import app
-
-db = app.db
+from Data.DbContext import db
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'

@@ -1,6 +1,4 @@
-import app
-
-db = app.db
+from Data.DbContext import db
 
 class Ativo(db.Model):
     __tablename__ = 'ativos'
@@ -14,7 +12,7 @@ class Ativo(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'nome': self.codigo,
-            'email': self.tipo,
-            'senha': self.descricao
+            'codigo': self.codigo,
+            'tipo': self.tipo,
+            'descricao': self.descricao
         }

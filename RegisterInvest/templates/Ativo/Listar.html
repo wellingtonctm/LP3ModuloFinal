@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Ativos</title>
+    </head>
+
+    <style>
+        table td, table th {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        #error {
+            color: red;
+            border: 1px solid red;
+            border-radius: 10px;
+            background-color: rgba(255, 0, 0, 0.2);
+            padding: 0px 20px;
+        }
+
+        .hide5s {
+            animation: hideAnimation 0s ease-in 5s;
+            animation-fill-mode: forwards;
+        }
+          
+        @keyframes hideAnimation {
+            to {
+                visibility: hidden;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+
+    <body>
+        <div class="container">
+            <div style="margin-top: 20px;">
+                <form method="POST" action="/Ativos/Criar">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="codigo">Tiker</label></td>
+                                <td><input id="codigo" type="text" name="codigo" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="tipo">Tipo</label></td>
+                                <td><input id="tipo" type="text" name="tipo" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="descricao">Descrição</label></td>
+                                <td><input id="descricao" type="text" name="descricao" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="display: flex; justify-content: center;">
+                                        <input type="submit" value="Cadastrar" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            {% if erro %}
+            <div id="error" class="hide5s" style="margin-top: 20px;">
+                <h4>Erro: {{ erro }} </h4>
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ativo in ativos %}
+                        <tr>
+                            <td>{{ ativo.id }}</td>
+                            <td>{{ ativo.codigo }}</td>
+                            <td>{{ ativo.tipo }}</td>
+                            <td>{{ ativo.descricao }}</td>
+                            <td>
+                                <form method="POST" action="/Ativos/Excluir">
+                                    <input name="id" type="hidden" value="{{ ativo.id }}" />
+                                    <input type="submit" value="Deletar" />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div
+    </body>
+</html>

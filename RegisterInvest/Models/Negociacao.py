@@ -1,4 +1,4 @@
-from ..app import db
+from Data.DbContext import db
 
 class Negociacao(db.Model):
     __tablename__ = 'negociacoes'

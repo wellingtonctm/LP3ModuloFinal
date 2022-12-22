@@ -1,8 +1,11 @@
-import app
+from Data.DbContext import db
 from Models.Usuario import Usuario
 from flask import render_template, request, session, redirect, url_for
 
 def login():
+    if 'usuario' in session and session['usuario'] != None:
+        return redirect(url_for('AtivoRoute.getAll'))
+    
     if request.method == 'POST':
         try:
             if request.form['email'] == None or request.form['email'].strip() == '':
@@ -17,7 +20,7 @@ def login():
                 raise Exception("Usuário ou senha inválidos!");
             
             session['usuario'] = request.form['email']
-            return redirect(url_for('Ativo.getAll'))
+            return redirect(url_for('AtivoRoute.getAll'))
         except Exception as ex:
             return render_template('Usuario/Login.html', erro = ex)
     else:
@@ -25,26 +28,20 @@ def login():
     
 def logout():
     session.pop('usuario', None)
-    return redirect(url_for('Usuarios.login'))
+    return redirect(url_for('UsuarioRoute.login'))
 
-def getAll():
-    if 'usuario' not in session or session['usuario'] == None:
-        return redirect(url_for('Usuarios.login'))
-    
+def getAll():    
     erro = request.args['erro'] if 'erro' in request.args else None
     usuarios = []
     
     try:
-        usuarios = app.db.session.query(Usuario).order_by(Usuario.email).all()
+        usuarios = db.session.query(Usuario).order_by(Usuario.id).all()
     except Exception as ex:
         erro = ex
         
     return render_template('Usuario/Listar.html', erro = erro, usuarios = usuarios)
 
 def create():
-    if 'usuario' not in session or session['usuario'] == None:
-        return redirect(url_for('Usuarios.login'))
-    
     erro = None
     
     try:
@@ -62,8 +59,8 @@ def create():
         usuario.email = request.form['email']
         usuario.senha = request.form['senha']
         
-        app.db.session.add(usuario)
-        app.db.session.commit()
+        db.session.add(usuario)
+        db.session.commit()
     except Exception as ex:
         erro = ex
         
@@ -72,7 +69,7 @@ def create():
 
 def delete():
     if 'usuario' not in session or session['usuario'] == None:
-        return redirect(url_for('Usuarios.login'))
+        return redirect(url_for('UsuarioRoute.login'))
     
     erro = None
     usuarios = []
@@ -81,15 +78,15 @@ def delete():
         if request.form['id'] == None or request.form['id'].strip() == '':
             raise Exception('Id não informado!')
         
-        usuario = app.db.session.query(Usuario).get(request.form['id'])
+        usuario = db.session.query(Usuario).get(request.form['id'])
         
         if usuario == None:
             raise Exception('Usuário não encontrado!')
         
-        app.db.session.delete(usuario)
-        app.db.session.commit()
+        db.session.delete(usuario)
+        db.session.commit()
         
-        usuarios = app.db.session.query(Usuario).order_by(Usuario.email).all()
+        usuarios = db.session.query(Usuario).order_by(Usuario.email).all()
     except Exception as ex:
         erro = ex
     

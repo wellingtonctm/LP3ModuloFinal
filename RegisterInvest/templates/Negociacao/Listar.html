@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Negociacoes</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="margin-top: 20px;">
+                <form method="POST" action="/Negociacoes/Criar">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="ativoId">Tiker</label></td>
+                                <td>
+                                    <select id="ativoId" name="ativoId">
+                                        <option value="" selected>Selecione</option>
+                                        {% for ativo in ativos %}
+                                        <option value="{{ ativo.id }}">{{ ativo.codigo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="tipo">Tipo</label></td>
+                                <td>
+                                    <select id="tipo" name="tipo">
+                                        <option value="" selected>Selecione</option>
+                                        <option value="COMPRA">COMPRA</option>
+                                        <option value="VENDA">VENDA</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="tamanhoLote">Tam. Lote</label></td>
+                                <td><input id="tamanhoLote" type="number" min="1" step="1" name="tamanhoLote" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="quantidade">Quantidade</label></td>
+                                <td><input id="quantidade" type="number" min="1" step="1" name="quantidade" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="valor">Valor</label></td>
+                                <td><input id="valor" type="number" min="0" step="0.01" name="valor" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="display: flex; justify-content: center;">
+                                        <input type="submit" value="Cadastrar" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            {% if erro %}
+            <div id="error" class="hide5s" style="margin-top: 20px;">
+                <h4>Erro: {{ erro }} </h4>
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 20px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Ativo</th>
+                            <th>Tipo</th>
+                            <th>Tam. Lote</th>
+                            <th>Quantidade</th>
+                            <th>Valor</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for negociacao in negociacoes %}
+                        <tr>
+                            <td>{{ negociacao["usuario"] }}</td>
+                            <td>{{ negociacao["tiker"] }}</td>
+                            <td>{{ negociacao["tipo"] }}</td>
+                            <td>{{ negociacao["lote"] }}</td>
+                            <td>{{ negociacao["quantidade"] }}</td>
+                            <td>{{ negociacao["valor"] }}</td>
+                            <td>
+                                <form method="POST" action="/Negociacoes/Excluir">
+                                    <input name="id" type="hidden" value="{{ negociacao['id'] }}" />
+                                    <input type="submit" value="Deletar" />
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div
+    </body>
+</html>

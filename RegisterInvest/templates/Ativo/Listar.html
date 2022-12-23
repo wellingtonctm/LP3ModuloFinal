@@ -5,51 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Ativos</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
-
-    <style>
-        table td, table th {
-            padding: 10px;
-            border: 1px solid black;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-
-        form {
-            margin: 0;
-        }
-
-        #error {
-            color: red;
-            border: 1px solid red;
-            border-radius: 10px;
-            background-color: rgba(255, 0, 0, 0.2);
-            padding: 0px 20px;
-        }
-
-        .hide5s {
-            animation: hideAnimation 0s ease-in 5s;
-            animation-fill-mode: forwards;
-        }
-          
-        @keyframes hideAnimation {
-            to {
-                visibility: hidden;
-                width: 0;
-                height: 0;
-            }
-        }
-
-        .container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-    </style>
 
     <body>
         <div class="container">
@@ -63,7 +20,13 @@
                             </tr>
                             <tr>
                                 <td><label for="tipo">Tipo</label></td>
-                                <td><input id="tipo" type="text" name="tipo" /></td>
+                                <td>
+                                    <select id="tipo" name="tipo">
+                                        <option value="" selected>Selecione</option>
+                                        <option value="FII">FII</option>
+                                        <option value="ACAO">AÇÃO</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td><label for="descricao">Descrição</label></td>

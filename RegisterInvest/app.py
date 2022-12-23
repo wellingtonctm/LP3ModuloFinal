@@ -5,8 +5,9 @@ from flask_migrate import Migrate
 
 from Data.DbContext import db
 
-from Routes.UsuarioRoute import usuarioRoute
 from Routes.AtivoRoute import ativoRoute
+from Routes.NegociacaoRoute import negociacaoRoute
+from Routes.UsuarioRoute import usuarioRoute
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,8 +18,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 db.init_app(app)
 migrate = Migrate(app, db)
 
-app.register_blueprint(usuarioRoute, url_prefix='/Usuarios')
 app.register_blueprint(ativoRoute, url_prefix='/Ativos')
+app.register_blueprint(negociacaoRoute, url_prefix='/Negociacoes')
+app.register_blueprint(usuarioRoute, url_prefix='/Usuarios')
 
 @app.route('/')
 def index():

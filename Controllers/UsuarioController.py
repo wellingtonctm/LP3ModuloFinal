@@ -4,7 +4,7 @@ from flask import render_template, request, session, redirect, url_for
 
 def login():
     if 'usuario' in session and session['usuario'] != None:
-        return redirect(url_for('AtivoRoute.getAll'))
+        return redirect(url_for('NegociacaoRoute.getAll'))
     
     if request.method == 'POST':
         try:
@@ -20,7 +20,7 @@ def login():
                 raise Exception("Usuário ou senha inválidos!");
             
             session['usuario'] = request.form['email']
-            return redirect(url_for('AtivoRoute.getAll'))
+            return redirect(url_for('NegociacaoRoute.getAll'))
         except Exception as ex:
             return render_template('Usuario/Login.html', erro = ex)
     else:
